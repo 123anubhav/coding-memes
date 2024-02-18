@@ -4,8 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anubhav Coding Memes</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .meme-title {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .credit {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -15,13 +64,34 @@
         
         <h2 class="meme-title">Loading...</h2>
         
-        <button id="button" class="btn">Get Another Memes</button>
+        <button id="button" class="btn">Generate Memes</button>
         
         <p class="credit"><a href="https://anubhav-webpage.netlify.app/" target="_blank">@Anubhav</a></p>
     </div>
 
     <script>
-       
+        const meme_url = "https://meme-api.com/gimme/codingmemes";
+
+        const generateMemeBtn = document.getElementById("button");
+        const memeImage = document.querySelector(".container img");
+        const memeTitle = document.querySelector(".container .meme-title")
+
+        const Details = (url, title) => {
+            memeImage.setAttribute("src", url)
+            memeTitle.innerHTML = title;
+        }
+
+        const generateMeme = () => {
+            fetch(meme_url)
+                .then((response) => response.json())
+                .then((data) => {
+                    Details(data.url, data.title)
+                });
+        };
+
+        generateMemeBtn.addEventListener("click", generateMeme);
+
+        generateMeme();
     </script>
 </body>
 </html>
